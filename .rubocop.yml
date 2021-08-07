@@ -1,0 +1,14 @@
+inherit_from:
+  - .rubocop_airbnb.yml
+AllCops:
+  TargetRubyVersion: 2.5
+  TargetRailsVersion: 5.2
+
+  # ここで解析しないディレクトリやファイルを設定可能
+  Exclude:
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'db/**/*'
+    - 'lib/**/*'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
