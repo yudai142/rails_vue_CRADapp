@@ -40,40 +40,28 @@
 
   export default {
     name: 'BookHome',
-    data: function() {
-      return {
-        bookInfo: {},
-        bookInfoBool: false,
-        books: [],
+    computed: {
+      books() {
+        return this.$store.state.books
+      },
+      bookInfo() {
+        return this.$store.state.bookInfo
+      },
+      bookInfoBool() {
+        return this.$store.state.bookInfoBool
       }
     },
     mounted: function() {
-      this.fetchBooks();
+      this.$store.commit('fetchBooks')
     },
     methods: {
-      fetchBooks() {
-        axios.get('/api/books').then((res) => {
-          for(var i = 0; i < res.data.books.length; i++) {
-            this.books.push(res.data.books[i]);
-          }
-        }, (error) => {
-          console.log(error);
-        });
-      },
       setBookInfo(id){
-        axios.get(`api/books/${id}.json`).then(res => {
-          this.bookInfo = res.data;
-          this.bookInfoBool = true;
-        });
+        this.$store.commit('setBookInfo', { id })
       },
       deleteBook(id) {
-        axios.delete(`/api/books/${id}`).then(res => {
-          this.books = [];
-          this.bookInfo = '';
-          this.bookInfoBool = false;
-          this.fetchBooks();
-        })
-      },
+        this.$store.commit('deleteBook', { id })
+        this.$store.commit('fetchBooks')
+      }
     }
   }
 </script>
