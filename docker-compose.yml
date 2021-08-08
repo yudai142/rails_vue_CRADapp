@@ -24,6 +24,15 @@ services:
             - db 
         tty: true
         stdin_open: true
+    
+    redis:
+      image: redis
+      ports:
+        - "6379:6379"
+      volumes:
+        - redis_data:/data
+      stdin_open: true
 
 volumes:
   gem_data:
+  redis_data:

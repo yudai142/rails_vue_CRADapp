@@ -10,10 +10,15 @@ export default new Vuex.Store({
   state: {
     books: [],
     bookInfo: {},
-    bookInfoBool: false
+    bookInfoBool: false,
+    signedIn: '', // このステートの[True/False]でログイン状態の表示如何を決定
   },
   // [mutations]がコンポーネントにおける[methods]に相当
   mutations: {
+    fetchSignedIn(state) {
+      // ログイン時，BooleanがlocalStorageに保存される。
+      state.signedIn = !!localStorage.signedIn
+    },
     fetchBooks(state) {
       state.books = [];
       axios.get('/api/books').then((res) => {
@@ -37,4 +42,10 @@ export default new Vuex.Store({
       });
     }
   },
+  actions: {
+    // ログイン時等において，[$store.dispatch('doFetchSignedIn')]で次のメソッドを呼び出し，[signedIn]を更新する。
+    doFetchSignedIn({ commit }) {
+      commit('fetchSignedIn')
+    }
+  }
 })
